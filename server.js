@@ -8,10 +8,6 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-app.get('/', (req, res)=>{
-    res.send('Prueba')
-})
-
 app.post('/form', (req, res)=>{
     
     const {nombre} = req.body
@@ -26,18 +22,36 @@ app.post('/form', (req, res)=>{
     res.end()
 })
 
+app.get('/error', function(req, res) {
+    res.sendFile(__dirname + "/public/error.html");
+  });
+
+app.get('/descarga/:archivo', function(req, res) {
+    const archivo = req.params.archivo;
+    const path = './data/'
+    const file = `id_${archivo}.txt`
+    const pathFile = path+file
+    res.download(pathFile)
+});
 
 app.post('/form2', (req, res)=>{
     try {
         const {id, nombre, apellido, titulo, autor, editorial, year} = req.body
-        const path = './data/'
-        const file = `id_${id}.txt`
-        let ws = fs.createWriteStream(path+file);
-        ws.write(`Id: ${id}, Nombre: ${nombre}, Apellido: ${apellido}`);
-        ws.write(`\nTitulo: ${titulo}, Editorial: ${editorial}, Autor: ${autor}, Año: ${year}`)
-        ws.end() 
-        res.send('Ok')
-        res.end()
+
+        if(id=='' || nombre=='' || apellido=='' || titulo=='' || autor=='' || editorial=='' || year==''){
+            res.redirect("/error");
+        }
+        else{
+            const path = './data/'
+            const file = `id_${id}.txt`
+            const pathFile = path+file
+            let ws = fs.createWriteStream(pathFile);
+            ws.write(`Id: ${id}, Nombre: ${nombre}, Apellido: ${apellido}`);
+            ws.write(`\nTitulo: ${titulo}, Editorial: ${editorial}, Autor: ${autor}, Año: ${year}`)
+            ws.end() 
+            res.redirect("/descarga/"+id);
+        }
+
     } catch (error) {
         res.send(error)
         res.end()
