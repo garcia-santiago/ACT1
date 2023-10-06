@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <h1>Prueba</h1>
-    <form action="http://localhost:3005/form" method="post" >
-        <input type="text" name="nombre">
+    <form>
+        <input type="number" name="id" placeholder="Documento" id="id">
+        <input type="text" name="nombre" placeholder="Nombre" id="nombre">
+        <input type="text" name="apellido" placeholder="Apellido" id="apellido">
+
+
+        <input type="text" name="titulo" placeholder="Titulo del Libro" id="titulo">
+        <input type="text" name="editorial" placeholder="Editorial" id="editorial">
+        <input type="text" name="autor" placeholder="Autor" id="autor">
+        <input type="number" name="year" placeholder="Año" id="year">
         <input type="submit" value="Enviar">
     </form>
+    <script src="app.js" type="module"></script>
 </body>
 </html>
