@@ -8,20 +8,6 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-app.post('/form', (req, res)=>{
-    
-    const {nombre} = req.body
-    const archivo = "./data/"+nombre+".txt"
-/*     const writeStream = fs.createWriteStream(archivo);
-    writeStream.write("Hi, JournalDEV Users. ");
-    writeStream.write("Thank You.");
-    writeStream.end(); */
-
-    const file = `./data/AFAFA`;
-    res.download(file); // Set disposition and send it.
-    res.end()
-})
-
 app.get('/error', function(req, res) {
     res.sendFile(__dirname + "/public/error.html");
   });
